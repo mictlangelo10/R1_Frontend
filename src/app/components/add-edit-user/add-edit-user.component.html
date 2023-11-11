@@ -1,46 +1,183 @@
-<div class="row mt-1">
-    <div class="col-lg-4 offset-lg-4">
-      <div class="card border-secondary mb-3" style="max-width: 25rem;">
-        <div class="card-header">Stepper Form</div>
-        <div class="card-body">
-          <mat-stepper>
-            <!-- Step 1 -->
-            <mat-step>
-              <ng-template matStepLabel>Step 1</ng-template>
-              <form [formGroup]="stepOneForm">
-                <!-- Add your form controls for Step 1 here -->
-                <div>
-                  <button mat-button matStepperNext>Next</button>
+<div class="row mt-1 justify-content-center">
+  <div class="col-lg-8">
+    <div class="card border-secondary mb-3">
+      <div class="card-header">Formulario de registro</div>
+      <div class="card-body">
+        <mat-stepper #stepper>
+          <!-- Step 1 -->
+          <mat-step>
+            <ng-template matStepLabel>Información personal</ng-template>
+            <form [formGroup]="stepOneForm">
+              <div class="row">
+                <div class="col-md-4">
+                  <mat-form-field>
+                    <input matInput formControlName="Nombre" placeholder="Nombre">
+                  </mat-form-field>
                 </div>
-              </form>
-            </mat-step>
-  
-            <!-- Step 2 -->
-            <mat-step>
-              <ng-template matStepLabel>Step 2</ng-template>
-              <form [formGroup]="stepTwoForm">
-                <!-- Add your form controls for Step 2 here -->
-                <div>
-                  <button mat-button matStepperPrevious>Back</button>
-                  <button mat-button matStepperNext>Next</button>
+                <div class="col-md-4">
+                  <mat-form-field>
+                    <input matInput formControlName="ApellidoP" placeholder="Apellido paterno">
+                  </mat-form-field>
                 </div>
-              </form>
-            </mat-step>
-  
-            <!-- Step 3 -->
-            <mat-step>
-              <ng-template matStepLabel>Step 3</ng-template>
-              <form [formGroup]="stepThreeForm">
-                <!-- Add your form controls for Step 3 here -->
-                <div>
-                  <button mat-button matStepperPrevious>Back</button>
-                  <button mat-button matStepperNext>Next</button>
+                <div class="col-md-4">
+                  <mat-form-field>
+                    <input matInput formControlName="ApellidoM" placeholder="Apellido materno">
+                  </mat-form-field>
                 </div>
-              </form>
-            </mat-step>
-          </mat-stepper>
-        </div>
+                <div class="col-md-4">
+                  <mat-form-field>
+                    <input matInput formControlName="Telefono" placeholder="Teléfono" type="tel">
+                  </mat-form-field>
+                </div>
+                <div class="col-md-4">
+                  <mat-form-field>
+                    <input matInput formControlName="CorreoElectronico" placeholder="Correo electrónico" type="email">
+                  </mat-form-field>
+                </div>
+                <div class="col-md-4">
+                  <mat-form-field>
+                    <mat-label>Nombre del bachillerato de procedencia</mat-label>
+                    <mat-select formControlName="Bachillerato">
+                      <mat-option *ngFor="let bachillerato of bachilleratos" [value]="bachillerato">{{ bachillerato }}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div class="col-md-4">
+                  <mat-form-field>
+                    <input matInput formControlName="PromedioBachillerato" placeholder="Promedio en Bachillerato" type="number" step="0.01">
+                  </mat-form-field>
+                </div>
+                <div class="col-md-4">
+                  <mat-form-field>
+                    <mat-label>Especialidad cursada durante el bachillerato</mat-label>
+                    <mat-select formControlName="Especialidad">
+                      <mat-option *ngFor="let especialidad of especialidades" [value]="especialidad">{{ especialidad }}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row mt-2">
+                <div class="col-md-12">
+                  <!-- Mensaje de error para el paso 1 -->
+                  <div *ngIf="stepOneForm.invalid" class="error-message">
+                    Por favor, completa todos los campos antes de pasar al siguiente paso.
+                  </div>
+                  <button type="button" class="btn btn-primary" (click)="stepper.next">Next</button>
+                </div>
+              </div>
+            </form>
+          </mat-step>
+
+          <!-- Step 2 -->
+          <mat-step>
+            <ng-template matStepLabel>Información de Contacto</ng-template>
+            <form [formGroup]="stepTwoForm">
+              <div class="row">
+                <div class="col-md-4">
+                  <mat-form-field>
+                    <input matInput formControlName="Domicilio" placeholder="Calle donde vives" type="text">
+                  </mat-form-field>
+                </div>
+                <div class="col-md-4">
+                  <mat-form-field>
+                    <input matInput formControlName="Domicilio1" placeholder="Número exterior" type="text">
+                  </mat-form-field>
+                </div>
+                <div class="col-md-4">
+                  <mat-form-field>
+                    <input matInput formControlName="Domicilio2" placeholder="Colonia" type="text">
+                  </mat-form-field>
+                </div>
+                <div class="col-md-4">
+                  <mat-form-field>
+                    <mat-label>Ciudad</mat-label>
+                    <mat-select formControlName="Domicilio3">
+                      <mat-option *ngFor="let ciudad of ciudades" [value]="ciudad">{{ ciudad }}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div class="col-md-4">
+                  <mat-form-field>
+                    <input matInput formControlName="TelefonoCasa" placeholder="Teléfono de casa" type="tel">
+                  </mat-form-field>
+                </div>
+                <div class="col-md-4">
+                  <mat-form-field>
+                    <input matInput formControlName="TelefonoPadres" placeholder="Teléfono de la madre o del padre" type="tel">
+                  </mat-form-field>
+                </div>
+                <div class="col-md-4">
+                  <mat-form-field>
+                    <input matInput formControlName="NombreMadre" placeholder="Nombre de la madre">
+                  </mat-form-field>
+                </div>
+                <div class="col-md-4">
+                  <mat-form-field>
+                    <input matInput formControlName="ApellidoPMadre" placeholder="Apellido paterno de la madre">
+                  </mat-form-field>
+                </div>
+                <div class="col-md-4">
+                  <mat-form-field>
+                    <input matInput formControlName="ApellidoMMadre" placeholder="Apellido materno de la madre">
+                  </mat-form-field>
+                </div>
+                <div class="col-md-4">
+                  <mat-form-field>
+                    <input matInput formControlName="NombrePadre" placeholder="Nombre del padre">
+                  </mat-form-field>
+                </div>
+                <div class="col-md-4">
+                  <mat-form-field>
+                    <input matInput formControlName="ApellidoPPadre" placeholder="Apellido paterno del padre">
+                  </mat-form-field>
+                </div>
+                <div class="col-md-4">
+                  <mat-form-field>
+                    <input matInput formControlName="ApellidoMPadre" placeholder="Apellido materno del padre">
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row mt-2">
+                <div class="col-md-6">
+                  <!-- Mensaje de error para el paso 2 -->
+                  <div *ngIf="stepTwoForm.invalid" class="error-message">
+                    Por favor, completa todos los campos antes de pasar al siguiente paso.
+                  </div>
+                  <button type="button" class="btn btn-warning" (click)="stepper.previous()">Back</button>
+                </div>
+                <div class="col-md-6">
+                  <button type="button" class="btn btn-primary" (click)="stepper.next">Next</button>
+                </div>
+              </div>
+            </form>
+          </mat-step>
+
+          <!-- Step 3 -->
+          <mat-step>
+            <ng-template matStepLabel>Información Académica y Documentos Adjuntos</ng-template>
+            <form [formGroup]="stepThreeForm" (ngSubmit)="submitForm()">
+              <div class="row">
+                <div class="col-md-4">
+                  <mat-form-field>
+                    <mat-label>Carrera que cursará</mat-label>
+                    <mat-select formControlName="Carrera">
+                      <mat-option *ngFor="let carrera of carreras" [value]="carrera">{{ carrera }}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row mt-2">
+                <div class="col-md-6">
+                  <button type="button" class="btn btn-warning" (click)="stepper.previous()">Back</button>
+                </div>
+                <div class="col-md-6">
+                  <button type="button" class="btn btn-primary" (click)="submitForm()">Submit</button>
+                </div>
+              </div>
+            </form>
+          </mat-step>          
+        </mat-stepper>
       </div>
     </div>
   </div>
-  
+</div>
