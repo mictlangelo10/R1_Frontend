@@ -1,0 +1,46 @@
+<div class="row mt-1">
+    <div class="col-lg-4 offset-lg-4">
+      <div class="card border-secondary mb-3" style="max-width: 25rem;">
+        <div class="card-header">Stepper Form</div>
+        <div class="card-body">
+          <mat-stepper>
+            <!-- Step 1 -->
+            <mat-step>
+              <ng-template matStepLabel>Step 1</ng-template>
+              <form [formGroup]="stepOneForm">
+                <!-- Add your form controls for Step 1 here -->
+                <div>
+                  <button mat-button matStepperNext>Next</button>
+                </div>
+              </form>
+            </mat-step>
+  
+            <!-- Step 2 -->
+            <mat-step>
+              <ng-template matStepLabel>Step 2</ng-template>
+              <form [formGroup]="stepTwoForm">
+                <!-- Add your form controls for Step 2 here -->
+                <div>
+                  <button mat-button matStepperPrevious>Back</button>
+                  <button mat-button matStepperNext>Next</button>
+                </div>
+              </form>
+            </mat-step>
+  
+            <!-- Step 3 -->
+            <mat-step>
+              <ng-template matStepLabel>Step 3</ng-template>
+              <form [formGroup]="stepThreeForm">
+                <!-- Add your form controls for Step 3 here -->
+                <div>
+                  <button mat-button matStepperPrevious>Back</button>
+                  <button mat-button matStepperNext>Next</button>
+                </div>
+              </form>
+            </mat-step>
+          </mat-stepper>
+        </div>
+      </div>
+    </div>
+  </div>
+  
