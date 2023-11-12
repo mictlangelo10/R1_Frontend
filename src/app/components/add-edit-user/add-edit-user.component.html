@@ -5,7 +5,7 @@
       <div class="card-body">
         <mat-stepper #stepper>
           <!-- Step 1 -->
-          <mat-step>
+          <mat-step [stepControl]="stepOneForm" errorMessage="Completa todos los campos.">
             <ng-template matStepLabel>Información personal</ng-template>
             <form [formGroup]="stepOneForm">
               <div class="row">
@@ -57,8 +57,7 @@
                 </div>
               </div>
               <div class="row mt-2">
-                <div class="col-md-12">
-                  <!-- Mensaje de error para el paso 1 -->
+                <div class="col-md-6">
                   <div *ngIf="stepOneForm.invalid" class="error-message">
                     Por favor, completa todos los campos antes de pasar al siguiente paso.
                   </div>
@@ -66,10 +65,9 @@
                 </div>
               </div>
             </form>
-          </mat-step>
-
+          </mat-step>       
           <!-- Step 2 -->
-          <mat-step>
+          <mat-step [stepControl]="stepOneForm" errorMessage="Completa todos los campos.">
             <ng-template matStepLabel>Información de Contacto</ng-template>
             <form [formGroup]="stepTwoForm">
               <div class="row">

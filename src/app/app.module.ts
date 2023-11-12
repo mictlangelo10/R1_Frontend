@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatSelectModule } from '@angular/material/select'; // Nueva importación
-import { MatInputModule } from '@angular/material/input'; // Nueva importación
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper'; // Agrega esta importación
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -30,9 +31,14 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
-    MatSelectModule, // Agrega esta línea
+    MatSelectModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: STEPPER_GLOBAL_OPTIONS,
+      useValue: { showError: true } // Configuración global para mostrar errores en el stepper
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
