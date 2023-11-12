@@ -10,32 +10,32 @@
             <form [formGroup]="stepOneForm">
               <div class="row">
                 <div class="col-md-4">
-                  <mat-form-field>
+                  <mat-form-field style="color: black;">
                     <input matInput formControlName="Nombre" placeholder="Nombre">
                   </mat-form-field>
                 </div>
                 <div class="col-md-4">
-                  <mat-form-field>
+                  <mat-form-field style="color: black;">
                     <input matInput formControlName="ApellidoP" placeholder="Apellido paterno">
                   </mat-form-field>
                 </div>
                 <div class="col-md-4">
-                  <mat-form-field>
+                  <mat-form-field style="color: black;">
                     <input matInput formControlName="ApellidoM" placeholder="Apellido materno">
                   </mat-form-field>
                 </div>
                 <div class="col-md-4">
-                  <mat-form-field>
-                    <input matInput formControlName="Telefono" placeholder="Teléfono" type="tel">
+                  <mat-form-field style="color: black;">
+                    <input matInput formControlName="Telefono" placeholder="Teléfono" type="tel" (input)="onPhoneNumberInput($event, 'Telefono')">
                   </mat-form-field>
                 </div>
                 <div class="col-md-4">
-                  <mat-form-field>
+                  <mat-form-field style="color: black;">
                     <input matInput formControlName="CorreoElectronico" placeholder="Correo electrónico" type="email">
                   </mat-form-field>
                 </div>
                 <div class="col-md-4">
-                  <mat-form-field>
+                  <mat-form-field style="color: black;">
                     <mat-label>Nombre del bachillerato de procedencia</mat-label>
                     <mat-select formControlName="Bachillerato">
                       <mat-option *ngFor="let bachillerato of bachilleratos" [value]="bachillerato">{{ bachillerato }}</mat-option>
@@ -43,12 +43,21 @@
                   </mat-form-field>
                 </div>
                 <div class="col-md-4">
-                  <mat-form-field>
+                  <mat-form-field style="color: black;">
                     <input matInput formControlName="PromedioBachillerato" placeholder="Promedio en Bachillerato" type="number" step="0.01">
-                  </mat-form-field>
+                    <mat-error *ngIf="stepOneForm.get('PromedioBachillerato')?.hasError('required')">
+                      Este campo es obligatorio.
+                    </mat-error>
+                    <mat-error *ngIf="stepOneForm.get('PromedioBachillerato')?.hasError('min')">
+                      El promedio debe ser igual o mayor a 6.
+                    </mat-error>
+                    <mat-error *ngIf="stepOneForm.get('PromedioBachillerato')?.hasError('max')">
+                      El promedio debe ser igual o menor a 10.
+                    </mat-error>
+                  </mat-form-field>                  
                 </div>
                 <div class="col-md-4">
-                  <mat-form-field>
+                  <mat-form-field style="color: black;">
                     <mat-label>Especialidad cursada durante el bachillerato</mat-label>
                     <mat-select formControlName="Especialidad">
                       <mat-option *ngFor="let especialidad of especialidades" [value]="especialidad">{{ especialidad }}</mat-option>
@@ -72,22 +81,22 @@
             <form [formGroup]="stepTwoForm">
               <div class="row">
                 <div class="col-md-4">
-                  <mat-form-field>
+                  <mat-form-field style="color: black;">
                     <input matInput formControlName="Domicilio" placeholder="Calle donde vives" type="text">
                   </mat-form-field>
                 </div>
                 <div class="col-md-4">
-                  <mat-form-field>
+                  <mat-form-field style="color: black;">
                     <input matInput formControlName="Domicilio1" placeholder="Número exterior" type="text">
-                  </mat-form-field>
+                  </mat-form-field >
                 </div>
                 <div class="col-md-4">
-                  <mat-form-field>
+                  <mat-form-field style="color: black;">
                     <input matInput formControlName="Domicilio2" placeholder="Colonia" type="text">
                   </mat-form-field>
                 </div>
                 <div class="col-md-4">
-                  <mat-form-field>
+                  <mat-form-field style="color: black;">
                     <mat-label>Ciudad</mat-label>
                     <mat-select formControlName="Domicilio3">
                       <mat-option *ngFor="let ciudad of ciudades" [value]="ciudad">{{ ciudad }}</mat-option>
@@ -95,42 +104,42 @@
                   </mat-form-field>
                 </div>
                 <div class="col-md-4">
-                  <mat-form-field>
-                    <input matInput formControlName="TelefonoCasa" placeholder="Teléfono de casa" type="tel">
+                  <mat-form-field style="color: black;">
+                    <input matInput formControlName="TelefonoCasa" placeholder="Teléfono de casa" type="tel" (input)="onPhoneNumberInput($event, 'TelefonoCasa')">
                   </mat-form-field>
                 </div>
                 <div class="col-md-4">
-                  <mat-form-field>
-                    <input matInput formControlName="TelefonoPadres" placeholder="Teléfono de la madre o del padre" type="tel">
+                  <mat-form-field style="color: black;">
+                    <input matInput formControlName="TelefonoPadres" placeholder="Teléfono de la madre o del padre" type="tel" (input)="onPhoneNumberInput($event, 'TelefonoPadres')">
                   </mat-form-field>
                 </div>
                 <div class="col-md-4">
-                  <mat-form-field>
+                  <mat-form-field style="color: black;">
                     <input matInput formControlName="NombreMadre" placeholder="Nombre de la madre">
                   </mat-form-field>
                 </div>
                 <div class="col-md-4">
-                  <mat-form-field>
+                  <mat-form-field style="color: black;">
                     <input matInput formControlName="ApellidoPMadre" placeholder="Apellido paterno de la madre">
                   </mat-form-field>
                 </div>
                 <div class="col-md-4">
-                  <mat-form-field>
+                  <mat-form-field style="color: black;">
                     <input matInput formControlName="ApellidoMMadre" placeholder="Apellido materno de la madre">
                   </mat-form-field>
                 </div>
                 <div class="col-md-4">
-                  <mat-form-field>
+                  <mat-form-field style="color: black;">
                     <input matInput formControlName="NombrePadre" placeholder="Nombre del padre">
                   </mat-form-field>
                 </div>
                 <div class="col-md-4">
-                  <mat-form-field>
+                  <mat-form-field style="color: black;">
                     <input matInput formControlName="ApellidoPPadre" placeholder="Apellido paterno del padre">
                   </mat-form-field>
                 </div>
                 <div class="col-md-4">
-                  <mat-form-field>
+                  <mat-form-field style="color: black;">
                     <input matInput formControlName="ApellidoMPadre" placeholder="Apellido materno del padre">
                   </mat-form-field>
                 </div>
@@ -156,7 +165,7 @@
             <form [formGroup]="stepThreeForm" (ngSubmit)="submitForm()">
               <div class="row">
                 <div class="col-md-4">
-                  <mat-form-field>
+                  <mat-form-field style="color: black;">
                     <mat-label>Carrera que cursará</mat-label>
                     <mat-select formControlName="Carrera">
                       <mat-option *ngFor="let carrera of carreras" [value]="carrera">{{ carrera }}</mat-option>

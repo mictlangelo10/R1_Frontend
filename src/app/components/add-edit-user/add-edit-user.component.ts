@@ -20,16 +20,15 @@ export class AddEditUserComponent implements OnInit {
   ciudades: string[] = ['Ciudad 1', 'Ciudad 2', 'Ciudad 3'];
   carreras: string[] = ['Carrera 1', 'Carrera 2', 'Carrera 3', 'Carrera 4', 'Carrera 5'];
 
-
   constructor(private fb: FormBuilder) {
     this.stepOneForm = this.fb.group({
       Nombre: ['', Validators.required],
       ApellidoP: ['', Validators.required],
       ApellidoM: ['', Validators.required],
-      Telefono: ['', Validators.required],
+      Telefono: ['', [Validators.required, Validators.pattern(/^\d{0,10}$/)]],
       CorreoElectronico: ['', [Validators.required, Validators.email]],
       Bachillerato: ['', Validators.required],
-      PromedioBachillerato: ['', [Validators.required, Validators.min(0), Validators.max(10)]],
+      PromedioBachillerato: ['', [Validators.required, Validators.min(6), Validators.max(10)]],
       Especialidad: ['', Validators.required],
     });
 
@@ -38,8 +37,8 @@ export class AddEditUserComponent implements OnInit {
       Domicilio1: ['', Validators.required],
       Domicilio2: ['', Validators.required],
       Domicilio3: ['', Validators.required],
-      TelefonoCasa: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
-      TelefonoPadres: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
+      TelefonoCasa: ['', [Validators.required, Validators.pattern(/^\d{0,10}$/)]],
+      TelefonoPadres: ['', [Validators.required, Validators.pattern(/^\d{0,10}$/)]],
       NombreMadre: ['', Validators.required],
       ApellidoPMadre: ['', Validators.required],
       ApellidoMMadre: ['', Validators.required],
@@ -75,5 +74,22 @@ export class AddEditUserComponent implements OnInit {
 
   submitForm(): void {
     console.log('Formulario enviado con éxito');
+  }
+
+  onPhoneNumberInput(event: Event, controlName: string): void {
+    const inputElement = event.target as HTMLInputElement;
+    let currentValue = inputElement.value;
+
+    // Limpiar el valor de no ser numérico
+    currentValue = currentValue.replace(/[^0-9]/g, '');
+
+    // Verificar si ya hay 10 dígitos
+    if (currentValue.length > 10) {
+      // Ajustar el valor truncándolo a los primeros 10 caracteres
+      currentValue = currentValue.slice(0, 10);
+    }
+
+    // Actualizar el valor en el formulario
+    this.stepOneForm.get(controlName)?.setValue(currentValue);
   }
 }
