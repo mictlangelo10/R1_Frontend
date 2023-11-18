@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatStepper } from '@angular/material/stepper';
 import { MatStep } from '@angular/material/stepper';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser'; // Importa DomSanitizer
 
 @Component({
   selector: 'app-add-edit-user',
@@ -12,6 +13,7 @@ export class AddEditUserComponent implements OnInit {
   stepOneForm: FormGroup;
   stepTwoForm: FormGroup;
   stepThreeForm: FormGroup;
+  selectedImageUrl: SafeUrl | undefined; // Cambia el tipo de string a SafeUrl
 
   @ViewChild('stepper', { static: false }) stepper: MatStepper | undefined;
 
@@ -20,7 +22,7 @@ export class AddEditUserComponent implements OnInit {
   ciudades: string[] = ['Ciudad 1', 'Ciudad 2', 'Ciudad 3'];
   carreras: string[] = ['Carrera 1', 'Carrera 2', 'Carrera 3', 'Carrera 4', 'Carrera 5'];
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private sanitizer: DomSanitizer) {
     this.stepOneForm = this.fb.group({
       Nombre: ['', Validators.required],
       ApellidoP: ['', Validators.required],
@@ -79,19 +81,19 @@ export class AddEditUserComponent implements OnInit {
   onPhoneNumberInput(event: Event, controlName: string): void {
     const inputElement = event.target as HTMLInputElement;
     let currentValue = inputElement.value;
-  
+
     // Limpiar el valor de no ser numérico
     currentValue = currentValue.replace(/[^0-9]/g, '');
-  
+
     // Ajustar la longitud si es necesario
     if (currentValue.length > 10) {
       // Ajustar el valor truncándolo a los primeros 10 caracteres
       currentValue = currentValue.slice(0, 10);
     }
-  
+
     // Determinar el formulario actual
     let currentForm: FormGroup | undefined;
-  
+
     if (this.stepper && this.stepper.selectedIndex === 0) {
       currentForm = this.stepOneForm;
     } else if (this.stepper && this.stepper.selectedIndex === 1) {
@@ -99,9 +101,20 @@ export class AddEditUserComponent implements OnInit {
     } else if (this.stepper && this.stepper.selectedIndex === 2) {
       currentForm = this.stepThreeForm;
     }
-  
+
     // Actualizar el valor en el formulario
     currentForm?.get(controlName)?.setValue(currentValue);
   }
-  
+
+  onFileSelected(event: any): void {
+    const fileInput = event.target as HTMLInputElement;
+    const file = fileInput.files?.[0];
+
+    if (file) {
+      // Crear una URL segura para la vista previa de la imagen
+      this.selectedImageUrl = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(file));
+
+      // Puedes realizar acciones adicionales aquí, como cargar la imagen en un servicio, etc.
+    }
+  }
 }

@@ -64,6 +64,14 @@
                     </mat-select>
                   </mat-form-field>
                 </div>
+                <div class="col-md-4">
+                  <input type="file" (change)="onFileSelected($event)" accept="image/*">
+                </div>
+                <div class="col-md-4">
+                  <div *ngIf="selectedImageUrl" class="image-preview">
+                    <img [src]="selectedImageUrl" alt="Selected Image">
+                  </div>
+                </div>
               </div>
               <div class="row mt-2">
                 <div class="col-md-6">
@@ -76,7 +84,7 @@
             </form>
           </mat-step>       
           <!-- Step 2 -->
-          <mat-step [stepControl]="stepOneForm" errorMessage="Completa todos los campos.">
+          <mat-step [stepControl]="stepTwoForm" errorMessage="Completa todos los campos.">
             <ng-template matStepLabel>Información de Contacto</ng-template>
             <form [formGroup]="stepTwoForm">
               <div class="row">
