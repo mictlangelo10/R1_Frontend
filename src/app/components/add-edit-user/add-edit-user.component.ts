@@ -79,17 +79,29 @@ export class AddEditUserComponent implements OnInit {
   onPhoneNumberInput(event: Event, controlName: string): void {
     const inputElement = event.target as HTMLInputElement;
     let currentValue = inputElement.value;
-
+  
     // Limpiar el valor de no ser numérico
     currentValue = currentValue.replace(/[^0-9]/g, '');
-
-    // Verificar si ya hay 10 dígitos
+  
+    // Ajustar la longitud si es necesario
     if (currentValue.length > 10) {
       // Ajustar el valor truncándolo a los primeros 10 caracteres
       currentValue = currentValue.slice(0, 10);
     }
-
+  
+    // Determinar el formulario actual
+    let currentForm: FormGroup | undefined;
+  
+    if (this.stepper && this.stepper.selectedIndex === 0) {
+      currentForm = this.stepOneForm;
+    } else if (this.stepper && this.stepper.selectedIndex === 1) {
+      currentForm = this.stepTwoForm;
+    } else if (this.stepper && this.stepper.selectedIndex === 2) {
+      currentForm = this.stepThreeForm;
+    }
+  
     // Actualizar el valor en el formulario
-    this.stepOneForm.get(controlName)?.setValue(currentValue);
+    currentForm?.get(controlName)?.setValue(currentValue);
   }
+  
 }
