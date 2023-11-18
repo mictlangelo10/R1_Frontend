@@ -1,8 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatStepper } from '@angular/material/stepper';
 import { MatStep } from '@angular/material/stepper';
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser'; // Importa DomSanitizer
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-add-edit-user',
@@ -13,10 +13,12 @@ export class AddEditUserComponent implements OnInit {
   stepOneForm: FormGroup;
   stepTwoForm: FormGroup;
   stepThreeForm: FormGroup;
-  selectedImageUrl: SafeUrl | undefined; // Cambia el tipo de string a SafeUrl
-  selectedPdfUrl: SafeUrl | undefined; // Nueva variable para la vista previa de PDF
-  selectedPdfName: string | undefined; // Nuevo campo para almacenar el nombre del archivo PDF
+  selectedImageUrl: SafeUrl | undefined;
+  selectedPdfUrlBachillerato: SafeUrl | undefined;
+  selectedPdfNameBachillerato: string | undefined;
 
+  selectedPdfUrlDomicilio: SafeUrl | undefined;
+  selectedPdfNameDomicilio: string | undefined;
 
   @ViewChild('stepper', { static: false }) stepper: MatStepper | undefined;
 
@@ -26,7 +28,11 @@ export class AddEditUserComponent implements OnInit {
   carreras: string[] = ['Carrera 1', 'Carrera 2', 'Carrera 3', 'Carrera 4', 'Carrera 5'];
   universidades: string[] = ['Universidad 1', 'Universidad 2', 'Universidad 3'];
 
-  constructor(private fb: FormBuilder, private sanitizer: DomSanitizer) {
+  constructor(
+    private fb: FormBuilder,
+    private sanitizer: DomSanitizer,
+    private cdr: ChangeDetectorRef
+  ) {
     this.stepOneForm = this.fb.group({
       Nombre: ['', Validators.required],
       ApellidoP: ['', Validators.required],
@@ -88,16 +94,12 @@ export class AddEditUserComponent implements OnInit {
     const inputElement = event.target as HTMLInputElement;
     let currentValue = inputElement.value;
 
-    // Limpiar el valor de no ser numérico
     currentValue = currentValue.replace(/[^0-9]/g, '');
 
-    // Ajustar la longitud si es necesario
     if (currentValue.length > 10) {
-      // Ajustar el valor truncándolo a los primeros 10 caracteres
       currentValue = currentValue.slice(0, 10);
     }
 
-    // Determinar el formulario actual
     let currentForm: FormGroup | undefined;
 
     if (this.stepper && this.stepper.selectedIndex === 0) {
@@ -108,7 +110,6 @@ export class AddEditUserComponent implements OnInit {
       currentForm = this.stepThreeForm;
     }
 
-    // Actualizar el valor en el formulario
     currentForm?.get(controlName)?.setValue(currentValue);
   }
 
@@ -117,22 +118,24 @@ export class AddEditUserComponent implements OnInit {
     const file = fileInput.files?.[0];
 
     if (file) {
-      // Crear una URL segura para la vista previa de la imagen
       this.selectedImageUrl = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(file));
-
-      // Puedes realizar acciones adicionales aquí, como cargar la imagen en un servicio, etc.
     }
   }
-  onPdfSelected(event: any): void {
+
+  onPdfSelected(event: any, fileType: string): void {
     const fileInput = event.target as HTMLInputElement;
     const file = fileInput.files?.[0];
 
     if (file) {
-      this.selectedPdfName = file.name; // Almacena el nombre del archivo
-      // Crear una URL segura para la vista previa del archivo PDF
-      this.selectedPdfUrl = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(file));
+      if (fileType === 'bachillerato') {
+        this.selectedPdfNameBachillerato = file.name;
+        this.selectedPdfUrlBachillerato = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(file));
+      } else if (fileType === 'domicilio') {
+        this.selectedPdfNameDomicilio = file.name;
+        this.selectedPdfUrlDomicilio = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(file));
+      }
 
-      // Puedes realizar acciones adicionales aquí, como cargar el PDF en un servicio, etc.
+      this.cdr.detectChanges(); // Forzar la actualización manual de Angular
     }
   }
 }

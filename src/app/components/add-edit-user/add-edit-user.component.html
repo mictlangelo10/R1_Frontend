@@ -190,10 +190,17 @@
                 </div>
                 <br>
                 <div class="col-md-4">
-                  <label for="certificadoInput" style="color: black;">Subir certificado:</label>
-                  <input type="file" (change)="onPdfSelected($event)" accept=".pdf">
-                  <div *ngIf="selectedPdfName" style="color: black;">Nombre del archivo: {{ selectedPdfName }}</div>
-                </div>           
+                  <label for="certificadoInputBachillerato" style="color: black;">Subir certificado de bachillerato</label>
+                  <input type="file" id="certificadoInputBachillerato" (change)="onPdfSelected($event, 'bachillerato')" accept=".pdf">
+                  <div *ngIf="selectedPdfNameBachillerato" style="color: black;">Nombre del archivo: {{ selectedPdfNameBachillerato }}</div>
+                  <iframe *ngIf="selectedPdfUrlBachillerato" [src]="selectedPdfUrlBachillerato" width="400" height="300"></iframe>
+                </div>              
+                <div class="col-md-4">
+                  <label for="certificadoInputDomicilio" style="color: black;">Subir comprobante de Domicilio:</label>
+                  <input type="file" id="certificadoInputDomicilio" (change)="onPdfSelected($event, 'domicilio')" accept=".pdf">
+                  <div *ngIf="selectedPdfNameDomicilio" style="color: black;">Nombre del archivo: {{ selectedPdfNameDomicilio }}</div>
+                  <iframe *ngIf="selectedPdfUrlDomicilio" [src]="selectedPdfUrlDomicilio" width="400" height="300"></iframe>
+                </div>                         
               </div>
               <div class="row mt-2">
                 <div class="col-md-6">
