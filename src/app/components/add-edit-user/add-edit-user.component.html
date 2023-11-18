@@ -170,7 +170,7 @@
           <!-- Step 3 -->
           <mat-step>
             <ng-template matStepLabel>Información Académica y Documentos Adjuntos</ng-template>
-            <form [formGroup]="stepThreeForm" (ngSubmit)="submitForm()">
+            <form [formGroup]="stepThreeForm" (ngSubmit)="submitForm()" errorMessage="Completa todos los campos.">
               <div class="row">
                 <div class="col-md-4">
                   <mat-form-field style="color: black;">
@@ -180,6 +180,20 @@
                     </mat-select>
                   </mat-form-field>
                 </div>
+                <div class="col-md-4">
+                  <mat-form-field style="color: black;">
+                    <mat-label>Universidad a la que se inscribirá</mat-label>
+                    <mat-select formControlName="Universidad">
+                      <mat-option *ngFor="let universidad of universidades" [value]="universidad">{{ universidad }}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <br>
+                <div class="col-md-4">
+                  <label for="certificadoInput" style="color: black;">Subir certificado:</label>
+                  <input type="file" (change)="onPdfSelected($event)" accept=".pdf">
+                  <div *ngIf="selectedPdfName" style="color: black;">Nombre del archivo: {{ selectedPdfName }}</div>
+                </div>           
               </div>
               <div class="row mt-2">
                 <div class="col-md-6">

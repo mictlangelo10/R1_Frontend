@@ -14,6 +14,9 @@ export class AddEditUserComponent implements OnInit {
   stepTwoForm: FormGroup;
   stepThreeForm: FormGroup;
   selectedImageUrl: SafeUrl | undefined; // Cambia el tipo de string a SafeUrl
+  selectedPdfUrl: SafeUrl | undefined; // Nueva variable para la vista previa de PDF
+  selectedPdfName: string | undefined; // Nuevo campo para almacenar el nombre del archivo PDF
+
 
   @ViewChild('stepper', { static: false }) stepper: MatStepper | undefined;
 
@@ -21,6 +24,7 @@ export class AddEditUserComponent implements OnInit {
   especialidades: string[] = ['Especialidad 1', 'Especialidad 2', 'Especialidad 3'];
   ciudades: string[] = ['Ciudad 1', 'Ciudad 2', 'Ciudad 3'];
   carreras: string[] = ['Carrera 1', 'Carrera 2', 'Carrera 3', 'Carrera 4', 'Carrera 5'];
+  universidades: string[] = ['Universidad 1', 'Universidad 2', 'Universidad 3'];
 
   constructor(private fb: FormBuilder, private sanitizer: DomSanitizer) {
     this.stepOneForm = this.fb.group({
@@ -51,6 +55,8 @@ export class AddEditUserComponent implements OnInit {
 
     this.stepThreeForm = this.fb.group({
       Carrera: ['', Validators.required],
+      Universidad: ['', Validators.required],
+      ArchivoPdf: [''],
     });
   }
 
@@ -115,6 +121,18 @@ export class AddEditUserComponent implements OnInit {
       this.selectedImageUrl = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(file));
 
       // Puedes realizar acciones adicionales aquí, como cargar la imagen en un servicio, etc.
+    }
+  }
+  onPdfSelected(event: any): void {
+    const fileInput = event.target as HTMLInputElement;
+    const file = fileInput.files?.[0];
+
+    if (file) {
+      this.selectedPdfName = file.name; // Almacena el nombre del archivo
+      // Crear una URL segura para la vista previa del archivo PDF
+      this.selectedPdfUrl = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(file));
+
+      // Puedes realizar acciones adicionales aquí, como cargar el PDF en un servicio, etc.
     }
   }
 }
